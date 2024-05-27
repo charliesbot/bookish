@@ -14,8 +14,11 @@ import { tamaguiConfig } from "../tamagui.config";
 export default function RootLayout() {
   const colorScheme = useColorScheme();
 
+  if (!colorScheme) {
+    return;
+  }
+
   return (
-    // add this
     <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack>
