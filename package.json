@@ -10,6 +10,7 @@
     "ts:check": "tsc"
   },
   "dependencies": {
+    "@uidotdev/usehooks": "^2.4.1",
     "expo": "~51.0.8",
     "expo-constants": "~16.0.1",
     "expo-linking": "~6.3.1",
