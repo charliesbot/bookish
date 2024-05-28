@@ -11,6 +11,14 @@ export default function RootLayout() {
           headerRight: () => <Link href="/book_filter">Next</Link>,
         }}
       />
+      <Stack.Screen
+        name="camera"
+        options={{ presentation: "fullScreenModal", headerShown: false }}
+      />
+      <Stack.Screen
+        name="photo_analysis"
+        options={{ presentation: "fullScreenModal", headerShown: false }}
+      />
       {/* <Stack.Screen name="modal" options={{ presentation: "modal" }} /> */}
     </Stack>
   );

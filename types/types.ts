@@ -4,3 +4,5 @@ export interface BookType {
   title: string;
   image: string;
 }
+
+export type MaybeNull<T> = T | null | undefined;
