@@ -1,13 +1,6 @@
-import {
-  Camera,
-  CameraView,
-  CameraViewRef,
-  PermissionStatus,
-  useCameraPermissions,
-} from "expo-camera";
-import { useEffect, useRef, useState } from "react";
+import { CameraView, CameraViewRef, useCameraPermissions } from "expo-camera";
+import { useEffect, useRef } from "react";
 import { View, StyleSheet, Text, Button, TouchableOpacity } from "react-native";
-import { MaybeNull } from "../types/types";
 import { useRouter } from "expo-router";
 
 export default function CameraScreen() {
@@ -54,7 +47,7 @@ export default function CameraScreen() {
             params: { photo: JSON.stringify(photo) },
           });
         })
-        .catch((e) => console.log("TEST ERROR", e));
+        .catch((e: Error) => console.log("TEST ERROR", e));
     }
   };
 
@@ -62,8 +55,11 @@ export default function CameraScreen() {
     <CameraView style={styles.container} facing="back" ref={cameraRef as any}>
       <View style={styles.spacer} />
       <View style={styles.bottomBar}>
-        <TouchableOpacity onPress={takePicture}>
-          <Text>Take Photo</Text>
+        <TouchableOpacity
+          style={{ paddingHorizontal: 30, paddingVertical: 10 }}
+          onPress={takePicture}
+        >
+          <Text style={styles.takePhotoButton}>Take Photo</Text>
         </TouchableOpacity>
       </View>
     </CameraView>
@@ -82,6 +78,8 @@ const styles = StyleSheet.create({
     height: 100,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "red",
+  },
+  takePhotoButton: {
+    color: "white",
   },
 });

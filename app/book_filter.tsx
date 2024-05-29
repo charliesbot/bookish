@@ -12,8 +12,8 @@ export default function BookFilter() {
 
   return (
     <View style={styles.container}>
-      <SafeAreaView />
       <TextInput
+        style={styles.searchInput}
         placeholder="Search"
         onChangeText={onChangeText}
         value={text}
@@ -35,6 +35,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     //backgroundColor: "cyan",
+  },
+  searchInput: {
+    height: 60,
+    paddingHorizontal: 20,
+    borderColor: "gray",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderRadius: 10,
+    marginHorizontal: 10,
+    marginTop: 20,
   },
   input: {},
   list: {

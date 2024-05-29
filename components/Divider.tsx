@@ -8,6 +8,7 @@ export const Divider: FC = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "gray",
-    height: 10,
+    height: 1,
+    marginVertical: 10,
   },
 });
