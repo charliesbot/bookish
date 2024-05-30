@@ -41,7 +41,7 @@ export default function QuoteCreation() {
     <View style={styles.container}>
       <ViewShot
         ref={viewShotRef as LegacyRef<ViewShot>}
-        options={{ format: "jpg", quality: 0.9 }}
+        options={{ format: "jpg", quality: 1 }}
       >
         <QuotePreview quote={context.bookQuote} book={context.book} />
       </ViewShot>

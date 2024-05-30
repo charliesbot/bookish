@@ -12,6 +12,7 @@ type Props = {
 
 const IMAGE_WIDTH = 200;
 const IMAGE_HEIGHT = 300;
+const LEFT_PADDING = 10;
 
 export const QuotePreview: FC<Props> = ({ quote, book }) => {
   const colors = useImageColors(book.image);
@@ -20,7 +21,7 @@ export const QuotePreview: FC<Props> = ({ quote, book }) => {
   const desiredHeight = 562; // Desired height in pixels
   const widthInDP = desiredWidth / scale; // Converts desired width to density-independent pixels
   const heightInDP = desiredHeight / scale; // Converts desired height to density-independent pixels
-  const selectedColor = colors?.colorOne;
+  const selectedColor = colors?.colorTwo;
 
   return (
     <View
@@ -36,7 +37,7 @@ export const QuotePreview: FC<Props> = ({ quote, book }) => {
       <View style={styles.contentColumn}>
         <View style={styles.quoteRow}>
           <View style={styles.line} />
-          <Spacer width={4} />
+          <Spacer width={8} />
           <Text
             style={[styles.quote, { color: selectedColor?.foregroundColor }]}
           >
@@ -44,15 +45,19 @@ export const QuotePreview: FC<Props> = ({ quote, book }) => {
           </Text>
         </View>
         <Spacer height={10} />
-        <Text style={[styles.title, { color: selectedColor?.foregroundColor }]}>
-          {book.title}
-        </Text>
-        <Spacer height={2} />
-        <Text
-          style={[styles.authors, { color: selectedColor?.foregroundColor }]}
-        >
-          {book.authors}
-        </Text>
+        <View style={styles.metadataColumn}>
+          <Text
+            style={[styles.title, { color: selectedColor?.foregroundColor }]}
+          >
+            {book.title}
+          </Text>
+          <Spacer height={2} />
+          <Text
+            style={[styles.authors, { color: selectedColor?.foregroundColor }]}
+          >
+            {book.authors}
+          </Text>
+        </View>
       </View>
       <Image
         source={{ uri: book.image }}
@@ -78,8 +83,11 @@ const styles = StyleSheet.create({
   },
   contentColumn: {
     justifyContent: "center",
-    paddingRight: 130,
+    paddingRight: 140,
     paddingLeft: 30,
+  },
+  metadataColumn: {
+    paddingLeft: 10,
   },
   cover: {
     position: "absolute",
@@ -89,7 +97,9 @@ const styles = StyleSheet.create({
     top: -(IMAGE_HEIGHT / 6),
     transform: [{ rotate: "10deg" }],
   },
-  quote: {},
+  quote: {
+    fontSize: 12,
+  },
   title: {
     fontSize: 10,
   },
