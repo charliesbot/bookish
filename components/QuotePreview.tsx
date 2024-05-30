@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, LegacyRef, useRef } from "react";
 import { View, Text, StyleSheet, PixelRatio } from "react-native";
 import { Image } from "expo-image";
 import { BookType } from "../types/types";
@@ -20,51 +20,46 @@ export const QuotePreview: FC<Props> = ({ quote, book }) => {
   const desiredHeight = 562; // Desired height in pixels
   const widthInDP = desiredWidth / scale; // Converts desired width to density-independent pixels
   const heightInDP = desiredHeight / scale; // Converts desired height to density-independent pixels
-  console.log(colors);
   const selectedColor = colors?.colorOne;
 
   return (
-    <ViewShot ref={viewShotRef} options={{ format: "jpg", quality: 0.9 }}>
-      <View
-        style={[
-          styles.container,
-          {
-            width: widthInDP,
-            height: heightInDP,
-            backgroundColor: selectedColor?.backgroundColor,
-          },
-        ]}
-      >
-        <View style={styles.contentColumn}>
-          <View style={styles.quoteRow}>
-            <View style={styles.line} />
-            <Spacer width={4} />
-            <Text
-              style={[styles.quote, { color: selectedColor?.foregroundColor }]}
-            >
-              {quote}
-            </Text>
-          </View>
-          <Spacer height={10} />
+    <View
+      style={[
+        styles.container,
+        {
+          width: widthInDP,
+          height: heightInDP,
+          backgroundColor: selectedColor?.backgroundColor,
+        },
+      ]}
+    >
+      <View style={styles.contentColumn}>
+        <View style={styles.quoteRow}>
+          <View style={styles.line} />
+          <Spacer width={4} />
           <Text
-            style={[styles.title, { color: selectedColor?.foregroundColor }]}
+            style={[styles.quote, { color: selectedColor?.foregroundColor }]}
           >
-            {book.title}
-          </Text>
-          <Spacer height={2} />
-          <Text
-            style={[styles.authors, { color: selectedColor?.foregroundColor }]}
-          >
-            {book.authors}
+            {quote}
           </Text>
         </View>
-        <Image
-          source={{ uri: book.image }}
-          style={styles.cover}
-          contentFit="cover"
-        />
+        <Spacer height={10} />
+        <Text style={[styles.title, { color: selectedColor?.foregroundColor }]}>
+          {book.title}
+        </Text>
+        <Spacer height={2} />
+        <Text
+          style={[styles.authors, { color: selectedColor?.foregroundColor }]}
+        >
+          {book.authors}
+        </Text>
       </View>
-    </ViewShot>
+      <Image
+        source={{ uri: book.image }}
+        style={styles.cover}
+        contentFit="cover"
+      />
+    </View>
   );
 };
 
