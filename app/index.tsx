@@ -11,47 +11,64 @@ import {
   Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Link, useLocalSearchParams } from "expo-router";
+import { Link, Stack, useLocalSearchParams } from "expo-router";
+import { useAppData } from "../context/ctx";
 
 const BOTTOM_BAR_HEIGHT = 100;
 
 export default function App() {
   const params = useLocalSearchParams();
   const { importedQuote } = params;
-  console.log("TEST TEST TEST ", importedQuote);
   const [text, onChangeText] = useState("");
   const keyboard = useKeyboard();
+  const context = useAppData();
 
   useEffect(() => {
     if (importedQuote != undefined) {
-      console.log("WHAT");
       onChangeText(importedQuote as string);
     }
   }, [importedQuote]);
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      keyboardVerticalOffset={
-        Platform.OS === "ios" ? keyboard.keyboardHeight + BOTTOM_BAR_HEIGHT : 0
-      }
-    >
-      <SafeAreaView />
-      <TextInput
-        onChangeText={onChangeText}
-        value={text}
-        placeholder="A thoughtful quote..."
-        style={styles.input}
-        multiline
+    <>
+      <Stack.Screen
+        options={{
+          title: "",
+          headerRight: () => (
+            <Link
+              href="/book_filter"
+              onPress={() => context?.updateBookQuote(text)}
+            >
+              Next
+            </Link>
+          ),
+        }}
       />
-      <View style={styles.bottomBar}>
-        <Link style={styles.openCameraButton} href="/camera">
-          Camera
-        </Link>
-      </View>
-      <StatusBar style="auto" />
-    </KeyboardAvoidingView>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        keyboardVerticalOffset={
+          Platform.OS === "ios"
+            ? keyboard.keyboardHeight + BOTTOM_BAR_HEIGHT
+            : 0
+        }
+      >
+        <SafeAreaView />
+        <TextInput
+          onChangeText={onChangeText}
+          value={text}
+          placeholder="A thoughtful quote..."
+          style={styles.input}
+          multiline
+        />
+        <View style={styles.bottomBar}>
+          <Link style={styles.openCameraButton} href="/camera">
+            Camera
+          </Link>
+        </View>
+        <StatusBar style="auto" />
+      </KeyboardAvoidingView>
+    </>
   );
 }
 

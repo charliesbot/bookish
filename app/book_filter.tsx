@@ -5,10 +5,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useSearchBooks } from "../hooks/useSearchBooks";
 import { BookRow } from "../components/BookRow";
 import { Divider } from "../components/Divider";
+import { useAppData } from "../context/ctx";
+import { useRouter } from "expo-router";
 
 export default function BookFilter() {
   const [text, onChangeText] = useState("");
   const { books, loading } = useSearchBooks(text);
+  const context = useAppData();
+  const router = useRouter();
 
   return (
     <View style={styles.container}>
@@ -24,7 +28,15 @@ export default function BookFilter() {
         data={books}
         keyExtractor={(item) => item.id}
         ItemSeparatorComponent={() => <Divider />}
-        renderItem={({ item }) => <BookRow book={item} />}
+        renderItem={({ item }) => (
+          <BookRow
+            book={item}
+            onPress={() => {
+              context?.updateBook(item);
+              router.navigate("/QuoteCreation");
+            }}
+          />
+        )}
       />
       <StatusBar style="auto" />
     </View>

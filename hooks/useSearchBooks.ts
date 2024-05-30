@@ -20,7 +20,6 @@ export const useSearchBooks = (query: string): UseSearchBooksResponse => {
       setLoading(true);
       getBooks(query)
         .then((x) => {
-          console.log("TEEEEEEST ", x);
           setBooks(x);
         })
         .catch((e) => setError(e))

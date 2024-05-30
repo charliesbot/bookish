@@ -1,69 +1,40 @@
-import { PropsWithChildren, createContext, useState } from "react";
-
-// // This hook can be used to access the user info.
-// export function useSession() {
-//   const value = React.useContext(AuthContext);
-//   if (process.env.NODE_ENV !== "production") {
-//     if (!value) {
-//       throw new Error("useSession must be wrapped in a <SessionProvider />");
-//     }
-//   }
-
-//   return value;
-// }
-
-// export function SessionProvider(props: React.PropsWithChildren) {
-
-//   return (
-//     <AppContext.Provider
-//       value={{
-//         signIn: () => {
-//           // Perform sign-in logic here
-//           setSession("xxx");
-//         },
-//         signOut: () => {
-//           setSession(null);
-//         },
-//         session,
-//         isLoading,
-//       }}
-//     >
-//       {props.children}
-//     </AppContext.Provider>
-//   );
-// }
+import { PropsWithChildren, createContext, useContext, useState } from "react";
+import { BookType, MaybeNull } from "../types/types";
 
 type AppContextType = {
-  signIn: () => void;
-  signOut: () => void;
-  session?: string | null;
-  isLoading: boolean;
+  bookQuote: MaybeNull<String>;
+  book: MaybeNull<BookType>;
+  updateBookQuote: (quote: String) => void;
+  updateBook: (book: BookType) => void;
 };
 
-export const AppContext = createContext<AppContextType>({
-  signIn: () => null,
-  signOut: () => null,
-  session: null,
-  isLoading: false,
-});
+export const AppContext = createContext<MaybeNull<AppContextType>>(undefined);
 
-// Provider component
-// export const AppProvider = ({ children }: PropsWithChildren) => {
-//   const [user, setUser] = useState(null);
+export const AppProvider = ({ children }: PropsWithChildren) => {
+  const [bookQuote, setBookQuote] = useState<MaybeNull<String>>(null);
+  const [book, setBook] = useState<MaybeNull<BookType>>(null);
 
-//   // Function to update user
-//   const updateUser = (userData) => {
-//     setUser(userData);
-//   };
+  const updateBookQuote = (quote: String) => {
+    setBookQuote(quote);
+  };
 
-//   // Function to clear user
-//   const clearUser = () => {
-//     setUser(null);
-//   };
+  const updateBook = (book: BookType) => {
+    setBook(book);
+  };
 
-//   return (
-//     <UserContext.Provider value={{ user, updateUser, clearUser }}>
-//       {children}
-//     </UserContext.Provider>
-//   );
-// };
+  return (
+    <AppContext.Provider
+      value={{ bookQuote, book, updateBookQuote, updateBook }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
+};
+
+export const useAppData = () => {
+  const context = useContext(AppContext);
+  if (context === undefined) {
+    throw new Error("useAppData must be used within a AppProvider");
+  }
+  return context;
+};

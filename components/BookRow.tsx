@@ -11,6 +11,7 @@ import { Spacer } from "./Space";
 
 type Props = {
   book: BookType;
+  onPress: (book: BookType) => void;
 };
 
 const styles = StyleSheet.create({
@@ -29,9 +30,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export const BookRow: FC<Props> = ({ book }) => {
+export const BookRow: FC<Props> = ({ book, onPress }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => onPress(book)}>
       <View style={styles.container}>
         <ImageBackground
           resizeMode="cover"
