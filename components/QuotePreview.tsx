@@ -1,14 +1,14 @@
 import { FC, LegacyRef, useRef } from "react";
 import { View, Text, StyleSheet, PixelRatio } from "react-native";
 import { Image } from "expo-image";
-import { BookType, ForegroundAndBackground } from "../types/types";
+import { BookType, ForegroundBackground } from "../types/types";
 import { Spacer } from "./Space";
 import { useImageColors } from "../hooks/useImageColors";
 
 type Props = {
   quote: String;
   book: BookType;
-  color: ForegroundAndBackground;
+  color: ForegroundBackground;
 };
 
 const IMAGE_WIDTH = 200;

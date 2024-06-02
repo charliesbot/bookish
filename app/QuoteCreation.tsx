@@ -6,12 +6,7 @@ import * as Sharing from "expo-sharing";
 import { useAppData } from "../context/ctx";
 import { QuotePreview } from "../components/QuotePreview";
 import { useImageColors } from "../hooks/useImageColors";
-import {
-  BookPalette,
-  BookPaletteKey,
-  ForegroundAndBackground,
-  MaybeNull,
-} from "../types/types";
+import { BookPalette, BookPaletteKey, MaybeNull } from "../types/types";
 import { Spacer } from "../components/Space";
 
 type ColorOptionsBarProps = {

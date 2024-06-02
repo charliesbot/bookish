@@ -5,6 +5,8 @@ import { View, Text, StyleSheet, Button, TouchableOpacity } from "react-native";
 import { MaybeNull } from "../types/types";
 import { Image } from "expo-image";
 import { LiveTextView } from "react-native-live-text-view";
+import { CloseButton } from "../components/CloseButton";
+import { FancyButton } from "../components/FancyButton";
 
 export default function PhotoAnalysis() {
   const params = useLocalSearchParams();
@@ -42,25 +44,19 @@ export default function PhotoAnalysis() {
         }}
       >
         <Image source={{ uri: photoData.uri }} style={styles.backgroundImage} />
-        {/* <Image
-          source={{ uri: photoData.uri }}
-          style={styles.backgroundImage}
-          contentFit="cover"
-          transition={500}
-        /> */}
       </LiveTextView>
-      {/* <Button title="Go back" onPress={router.back} /> */}
-      <Link
-        href={{
-          pathname: "/",
-          params: {
-            importedQuote: selection,
-          },
-        }}
+      <FancyButton
+        text="Use Text Selection"
         style={styles.link}
-      >
-        Use Selection
-      </Link>
+        onPress={() => {
+          router.navigate({
+            pathname: "/",
+            params: {
+              importedQuote: selection,
+            },
+          });
+        }}
+      />
     </View>
   );
 }

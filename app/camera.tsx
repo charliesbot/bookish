@@ -2,6 +2,9 @@ import { CameraView, CameraViewRef, useCameraPermissions } from "expo-camera";
 import { useEffect, useRef } from "react";
 import { View, StyleSheet, Text, Button, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
+import { CloseButton } from "../components/CloseButton";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { CapturePhotoButton } from "../components/CapturePhotoButton";
 
 export default function CameraScreen() {
   const cameraRef = useRef<CameraViewRef>(null);
@@ -53,14 +56,11 @@ export default function CameraScreen() {
 
   return (
     <CameraView style={styles.container} facing="back" ref={cameraRef as any}>
+      <SafeAreaView />
+      <CloseButton style={styles.closeButton} />
       <View style={styles.spacer} />
-      <View style={styles.bottomBar}>
-        <TouchableOpacity
-          style={{ paddingHorizontal: 30, paddingVertical: 10 }}
-          onPress={takePicture}
-        >
-          <Text style={styles.takePhotoButton}>Take Photo</Text>
-        </TouchableOpacity>
+      <View style={styles.bottomContainer}>
+        <CapturePhotoButton onPress={takePicture} />
       </View>
     </CameraView>
   );
@@ -69,15 +69,18 @@ export default function CameraScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: "relative",
+  },
+  closeButton: {
+    marginLeft: 20,
   },
   spacer: {
     flex: 1,
   },
-  bottomBar: {
-    display: "flex",
-    height: 100,
+  bottomContainer: {
     justifyContent: "center",
     alignItems: "center",
+    height: 200,
   },
   takePhotoButton: {
     color: "white",
