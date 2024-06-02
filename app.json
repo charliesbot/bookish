@@ -37,6 +37,12 @@
         {
           "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera"
         }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/Lora.ttf", "./assets/fonts/Roboto-Thin.ttf"]
+        }
       ]
     ]
   }

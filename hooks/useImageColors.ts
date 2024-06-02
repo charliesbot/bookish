@@ -3,7 +3,7 @@ import { getColors, ImageColorsResult } from "react-native-image-colors";
 import {
   BookColorsType,
   BookPalette,
-  ForegroundAndBackground,
+  ForegroundBackground,
   HSLColor,
   MaybeNull,
   RGBColor,
@@ -45,12 +45,13 @@ function convertHexaToHSL(hexa: string) {
   return convertRGBtoHSL(rgb);
 }
 
-const getPaletteFromHSL = (hsl: HSLColor): ForegroundAndBackground => {
+const getPaletteFromHSL = (hsl: HSLColor): ForegroundBackground => {
   const { h, s, l } = hsl;
 
   return {
     foregroundColor: `hsl(${h}, ${s}%, 5%)`,
     backgroundColor: `hsl(${h}, ${s}%, 90%)`,
+    originalColor: `hsl(${h}, ${s}%, 60%)`,
   };
 };
 
@@ -78,9 +79,13 @@ const getColorsByPlatform = (
   }
 };
 
-export const useImageColors = (url: string) => {
+export const useImageColors = (url?: string) => {
   const [colors, setColors] = useState<MaybeNull<BookPalette>>(null);
   useEffect(() => {
+    if (!url) {
+      return;
+    }
+
     getColors(url, {
       fallback: "#228B22",
       cache: true,
@@ -100,7 +105,7 @@ export const useImageColors = (url: string) => {
         colorFour: getPaletteFromHSL(hslColors.colorFour),
       }))
       .then(setColors);
-  }, []);
+  }, [url]);
 
   return colors;
 };

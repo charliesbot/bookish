@@ -1,27 +1,27 @@
 import { FC, LegacyRef, useRef } from "react";
 import { View, Text, StyleSheet, PixelRatio } from "react-native";
 import { Image } from "expo-image";
-import { BookType } from "../types/types";
+import { BookType, ForegroundAndBackground } from "../types/types";
 import { Spacer } from "./Space";
 import { useImageColors } from "../hooks/useImageColors";
 
 type Props = {
   quote: String;
   book: BookType;
+  color: ForegroundAndBackground;
 };
 
 const IMAGE_WIDTH = 200;
 const IMAGE_HEIGHT = 300;
 const LEFT_PADDING = 10;
 
-export const QuotePreview: FC<Props> = ({ quote, book }) => {
-  const colors = useImageColors(book.image);
+export const QuotePreview: FC<Props> = ({ quote, book, color }) => {
   const scale = PixelRatio.get(); // Gets the device's pixel density
   const desiredWidth = 1000;
   const desiredHeight = 562; // Desired height in pixels
   const widthInDP = desiredWidth / scale; // Converts desired width to density-independent pixels
   const heightInDP = desiredHeight / scale; // Converts desired height to density-independent pixels
-  const selectedColor = colors?.colorTwo;
+  const dynamicQuoteFontSize = quote.length > 150 ? 10 : 12;
 
   return (
     <View
@@ -30,7 +30,7 @@ export const QuotePreview: FC<Props> = ({ quote, book }) => {
         {
           width: widthInDP,
           height: heightInDP,
-          backgroundColor: selectedColor?.backgroundColor,
+          backgroundColor: color?.backgroundColor,
         },
       ]}
     >
@@ -39,22 +39,21 @@ export const QuotePreview: FC<Props> = ({ quote, book }) => {
           <View style={styles.line} />
           <Spacer width={8} />
           <Text
-            style={[styles.quote, { color: selectedColor?.foregroundColor }]}
+            style={[
+              styles.quote,
+              { color: color?.foregroundColor, fontSize: dynamicQuoteFontSize },
+            ]}
           >
             {quote}
           </Text>
         </View>
         <Spacer height={10} />
         <View style={styles.metadataColumn}>
-          <Text
-            style={[styles.title, { color: selectedColor?.foregroundColor }]}
-          >
+          <Text style={[styles.title, { color: color?.foregroundColor }]}>
             {book.title}
           </Text>
           <Spacer height={2} />
-          <Text
-            style={[styles.authors, { color: selectedColor?.foregroundColor }]}
-          >
+          <Text style={[styles.authors, { color: color?.foregroundColor }]}>
             {book.authors}
           </Text>
         </View>
@@ -83,7 +82,7 @@ const styles = StyleSheet.create({
   },
   contentColumn: {
     justifyContent: "center",
-    paddingRight: 140,
+    paddingRight: 150,
     paddingLeft: 30,
   },
   metadataColumn: {
@@ -98,12 +97,15 @@ const styles = StyleSheet.create({
     transform: [{ rotate: "10deg" }],
   },
   quote: {
-    fontSize: 12,
+    fontFamily: "Lora",
+    lineHeight: 12,
   },
   title: {
-    fontSize: 10,
+    fontFamily: "Roboto",
+    fontSize: 9,
   },
   authors: {
-    fontSize: 8,
+    fontFamily: "Roboto",
+    fontSize: 6,
   },
 });

@@ -13,7 +13,7 @@ export const useSearchBooks = (query: string): UseSearchBooksResponse => {
   const [books, setBooks] = useState<BookType[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const debouncedSearchTerm = useDebounce<string>(query, 1000);
+  const debouncedSearchTerm = useDebounce<string>(query, 400);
 
   useEffect(() => {
     if (debouncedSearchTerm) {

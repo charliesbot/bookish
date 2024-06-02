@@ -26,14 +26,17 @@ export type HSLColor = {
   l: number;
 };
 
-export type ForegroundAndBackground = {
+export type ForegroundBackground = {
   foregroundColor: string;
   backgroundColor: string;
+  originalColor: string;
 };
 
 export type BookPalette = {
-  colorOne: ForegroundAndBackground;
-  colorTwo: ForegroundAndBackground;
-  colorThree: ForegroundAndBackground;
-  colorFour: ForegroundAndBackground;
+  colorOne: ForegroundBackground;
+  colorTwo: ForegroundBackground;
+  colorThree: ForegroundBackground;
+  colorFour: ForegroundBackground;
 };
+
+export type BookPaletteKey = keyof BookPalette;
