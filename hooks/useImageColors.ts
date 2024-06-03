@@ -9,15 +9,21 @@ import {
   RGBColor,
 } from "../types/types";
 
-const convertHexaToRGB = (hexa: string): RGBColor => {
+export function convertHexaToRGB(hexa: string, alpha: number = 1): RGBColor {
   let hex = hexa.replace(/^#/, "");
+  let r = parseInt(hex.substring(0, 2), 16);
+  let g = parseInt(hex.substring(2, 4), 16);
+  let b = parseInt(hex.substring(4, 6), 16);
+  let a = alpha;
 
   return {
-    r: parseInt(hex.substring(0, 2), 16),
-    g: parseInt(hex.substring(2, 4), 16),
-    b: parseInt(hex.substring(4, 6), 16),
+    r,
+    g,
+    b,
+    a,
+    toString: () => `rgba(${r}, ${g}, ${b}, ${a})`,
   };
-};
+}
 
 const convertRGBtoHSL = (rgb: RGBColor): HSLColor => {
   let { r, g, b } = rgb;

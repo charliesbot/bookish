@@ -8,6 +8,7 @@ import { QuotePreview } from "../components/QuotePreview";
 import { useImageColors } from "../hooks/useImageColors";
 import { BookPalette, BookPaletteKey, MaybeNull } from "../types/types";
 import { Spacer } from "../components/Space";
+import { FancyButton } from "../components/FancyButton";
 
 type ColorOptionsBarProps = {
   colors: BookPalette;
@@ -67,31 +68,35 @@ export default function QuoteCreation() {
   };
 
   if (!context?.book || !context?.bookQuote || !colors || !color) {
-    return <View />;
+    return <View style={styles.container} />;
   }
 
   return (
-    <View style={styles.container}>
-      <ViewShot
-        ref={viewShotRef as LegacyRef<ViewShot>}
-        options={{ format: "jpg", quality: 1 }}
+    <View style={[styles.container]}>
+      <View
+        style={[styles.wrapper, { borderColor: colors[color].originalColor }]}
       >
-        <QuotePreview
-          quote={context.bookQuote}
-          book={context.book}
-          color={colors[color]}
-        />
-      </ViewShot>
-      <Spacer height={20} />
+        <ViewShot
+          ref={viewShotRef as LegacyRef<ViewShot>}
+          options={{ format: "jpg", quality: 1 }}
+        >
+          <QuotePreview
+            quote={context.bookQuote}
+            book={context.book}
+            color={colors[color]}
+          />
+        </ViewShot>
+      </View>
+      <Spacer height={40} />
       <ColorOptionsBar
         colors={colors}
         selectedColor={color}
         onSelectColor={(color) => setColor(color)}
       />
-      <Spacer height={20} />
-      <TouchableOpacity onPress={captureAndShareScreenshot}>
-        <Text>Share</Text>
-      </TouchableOpacity>
+      <Spacer height={60} />
+      <View style={styles.buttonsRow}>
+        <FancyButton text="Share" onPress={captureAndShareScreenshot} />
+      </View>
       <StatusBar style="auto" />
     </View>
   );
@@ -103,8 +108,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "black",
   },
-  input: {},
+  wrapper: {
+    borderStyle: "solid",
+    borderWidth: 20,
+  },
   list: {
     padding: 20,
   },
@@ -120,5 +129,9 @@ const styles = StyleSheet.create({
     borderRadius: COLOR_OPTION_SIZE,
     borderStyle: "solid",
     borderWidth: 10,
+  },
+  buttonsRow: {
+    flexDirection: "row",
+    gap: 30,
   },
 });
