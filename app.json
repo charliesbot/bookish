@@ -44,6 +44,11 @@
           "fonts": ["./assets/fonts/Lora.ttf", "./assets/fonts/Roboto-Thin.ttf"]
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "c9ad2c13-947e-4861-9e22-9188c3e357c8"
+      }
+    }
   }
 }
