@@ -5,6 +5,7 @@ import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import { AppProvider } from "../context/ctx";
 import { FancyButton } from "../components/FancyButton";
+import { StatusBar } from "expo-status-bar";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -67,7 +68,7 @@ export default function RootLayout() {
           name="photo_analysis"
           options={{ presentation: "fullScreenModal", headerShown: false }}
         />
-        {/* <Stack.Screen name="modal" options={{ presentation: "modal" }} /> */}
+        <StatusBar style="light" />
       </Stack>
     </AppProvider>
   );

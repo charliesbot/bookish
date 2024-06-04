@@ -1,21 +1,16 @@
 import { StatusBar } from "expo-status-bar";
-import { useKeyboard } from "@react-native-community/hooks";
 import { useEffect, useState } from "react";
 import {
-  Button,
   StyleSheet,
-  Text,
   TextInput,
   View,
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useAppData } from "../context/ctx";
 import FeatherIcons from "@expo/vector-icons/Feather";
-import { Icon } from "../components/Icon";
 import { CURRENT_MAIN_APP_COLOR } from "../constants/constants";
 
 const BOTTOM_BAR_HEIGHT = 100;
@@ -25,7 +20,6 @@ export default function App() {
   const router = useRouter();
   const { importedQuote } = params;
   const [text, onChangeText] = useState("");
-  const keyboard = useKeyboard();
   const context = useAppData();
 
   useEffect(() => {
@@ -59,11 +53,7 @@ export default function App() {
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === "ios" ? "padding" : undefined}
-        keyboardVerticalOffset={
-          Platform.OS === "ios"
-            ? keyboard.keyboardHeight + BOTTOM_BAR_HEIGHT
-            : 0
-        }
+        keyboardVerticalOffset={Platform.OS === "ios" ? BOTTOM_BAR_HEIGHT : 0}
       >
         <TextInput
           autoFocus
